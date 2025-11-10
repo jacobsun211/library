@@ -1,6 +1,6 @@
 import json
-from library.book import Book
-from library.user import User
+from Library_Management_System.book import Book
+from Library_Management_System.user import User
 
 class Library:
     with open('books.json','w')as f:
@@ -20,23 +20,31 @@ class Library:
     def add_user(user):
         with open('users.json', 'r')as f:
             users = json.load(f)
-        users.append(user)
+        users.append(user.to_dict())
         with open('users.json', 'w') as f:
             json.dump(users,f)
 
+
     @staticmethod
-    def borrow_book(user_id, book_isbn):
+    def borrow_book(user_name, borrow):
         with open("users.json",'r')as f:
             users = json.load(f)
+        with open('books.json', 'r') as f:
+            books = json.load(f)
         for user in users:
-            if user.id == user_id:
-                with open('books.json','r') as f:
-                    books = json.load(f)
+            if user.name == user_name:
                 for book in books:
-                    if book.isbn == book_isbn and book.is_available:
+                    if book.title == borrow and book.is_available:
                         user.borrowed_books.append(book)
-                        book.is_available = False
-                        print(f'{book} is borrowed')
+                        books[book.is_available] = False
+                        print(books)
+                        with open('books.json', 'w') as f:
+                            books = json.load(f)
+
+                        print(f'{borrow} is borrowed')
+                print('no such book')
+            print('you are not in the system')
+        print('you are not in the system')
 
     @staticmethod
     def return_book(user_id, book_isbn):
@@ -72,7 +80,8 @@ class Library:
 book = Book('harry potter', "JK rowling")
 Library.add_book(book)
 user = User('jacob')
-Library.borrow_book(user.id,book.isbn)
-Library.list_available_books()
+Library.add_user(user)
+# Library.borrow_book(user.id,book.isbn)
+# Library.list_available_books()
 
 

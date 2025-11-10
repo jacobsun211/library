@@ -1,6 +1,9 @@
+import random
 class Book:
-    def __init__(self, title, author, isbn, is_available):
+    def __init__(self, title, author):
         self.title = title
         self.author = author
-        self.isbn = isbn
+        isbn_num = random.randint(1,10000)
+        self.isbn = isbn_num
         self.is_available = True
+

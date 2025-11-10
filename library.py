@@ -1,66 +1,79 @@
-from book import *
-from user import *
+import json
+from book import Book
+from user import User
+
 class Library:
-    def __init__(self):
-        self.list_of_books = []
-        self.list_of_users  = []
+    with open('books.json','w')as f:
+        json.dump([],f)
+    with open('users.json','w')as f:
+        json.dump([],f)
 
+    @staticmethod
+    def add_book(book):
+        with open('books.json', 'r')as f:
+            books = json.load(f)
+        books.append(book.to_dict())
+        with open('books.json', 'w')as f:
+            json.dump(books,f)
 
+    @staticmethod
+    def add_user(user):
+        with open('users.json', 'r')as f:
+            users = json.load(f)
+        users.append(user)
+        with open('users.json', 'w') as f:
+            json.dump(users,f)
 
-    def add_book(self,book):
-        self.list_of_books.append(book)
-        # print("The book has been borrowed successfully")
-
-
-    def add_user(self,user):
-        self.list_of_users.append(user)
-
-    def borrow_book(self,user_id, book_isbn):
-        for user in self.list_of_users:
+    @staticmethod
+    def borrow_book(user_id, book_isbn):
+        with open("users.json",'r')as f:
+            users = json.load(f)
+        for user in users:
             if user.id == user_id:
-                for book in self.list_of_books:
+                with open('books.json','r') as f:
+                    books = json.load(f)
+                for book in books:
                     if book.isbn == book_isbn and book.is_available:
                         user.borrowed_books.append(book)
                         book.is_available = False
-                        print("Excellent, the book was borrowed")
+                        print(f'{book} is borrowed')
 
-
-    def return_book(self,user_id, book_isbn):
-        for user in self.list_of_users:
-            if user.user_id == user_id:
-                for book in self.list_of_books:
-                    if book.book_isbn == book_isbn:
+    @staticmethod
+    def return_book(user_id, book_isbn):
+        with open('users.json','r')as f:
+            users = json.load(f)
+        for user in users:
+            if user.id == user_id:
+                with open('books.json','r') as f:
+                    books = json.load(f)
+                for book in books:
+                    if book.isbn == book_isbn:
                         user.borrowed_books.pop(book)
                         book.is_available = True
 
+    @staticmethod
+    def list_available_books():
+        with open('books.json', 'r') as f:
+            books = json.load(f)
+        for book in books:
+            print(f'title: {book['title']}; author: {book['author']}; isbn: {book['isbn']}')
 
-    def list_available_books(self):
-        available_books = []
-        for book in self.list_of_books:
-            if book.is_available:
-                available_books.append(book.title)
-        return available_books
-
-
-    def search_book(self,author):
+    @staticmethod
+    def search_book(author):
         authors_books = []
-        for book in self.list_of_books:
+        with open('books.json', 'r') as f:
+            books = json.load(f)
+        for book in books:
             if book.author == author:
-                authors_books.append(book.title)
+                authors_books.append(book.name)
         return authors_books
 
+#
+# book = Book('harry potter', "JK rowling")
+# Library.add_book(book)
+# user = User('jacob')
+# Library.borrow_book(user.id,book.isbn)
+# Library.list_available_books()
+#
+#
 
-
-
-book1= Book("hari potter","g.k.roling")
-book2= Book("talmud babli","tanaim")
-user1 = User("ariel",207827924)
-user2 = User("avigail",322869355)
-library1 = Library()
-library1.add_book(book1)
-library1.add_book(book2)
-library1.add_user(user1)
-library1.add_user(user2)
-library1.borrow_book(207827924,book1.isbn)
-library1.borrow_book(207827924,book2.isbn)
-print(library1.list_available_books())

@@ -69,10 +69,10 @@ class Library:
         return authors_books
 
 
-book = Book('harry potter', "JK rowling",352325)
-book = Library.add_book(book)
-user = User('jacob',544563)
-Library.borrow_book(user.id,352325)
+book = Book('harry potter', "JK rowling")
+Library.add_book(book)
+user = User('jacob')
+Library.borrow_book(user.id,book.isbn)
 Library.list_available_books()
 
 

@@ -1,10 +1,10 @@
 from random import randint
 
 class Book:
-    def __init__(self, title, author,isbn):
+    def __init__(self, title, author):
         self.title = title
         self.author = author
-        self.isbn = isbn
+        self.isbn = randint(1000,9999)
         self.is_available = True
 
     def to_dict(self):

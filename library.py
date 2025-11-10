@@ -37,6 +37,8 @@ class Library:
                         user.borrowed_books.append(book)
                         book.is_available = False
                         print(f'{book} is borrowed')
+                        with open('books.json', 'w') as f:
+                            json.dump(books, f)
 
     @staticmethod
     def return_book(user_id, book_isbn):
@@ -56,7 +58,8 @@ class Library:
         with open('books.json', 'r') as f:
             books = json.load(f)
         for book in books:
-            print(f'title: {book['title']}; author: {book['author']}; isbn: {book['isbn']}')
+            if book["is_available"]:
+                print(f'title: {book['title']}; author: {book['author']}; isbn: {book['isbn']}')
 
     @staticmethod
     def search_book(author):
@@ -72,8 +75,9 @@ class Library:
 # book = Book('harry potter', "JK rowling")
 # Library.add_book(book)
 # user = User('jacob')
+# Library.add_user(User)
 # Library.borrow_book(user.id,book.isbn)
-# Library.list_available_books()
+# # Library.list_available_books()
 #
 #
-
+#

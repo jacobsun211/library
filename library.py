@@ -5,6 +5,8 @@ class Library:
         self.list_of_books = []
         self.list_of_users  = []
 
+
+
     def add_book(self,book):
         self.list_of_books.append(book)
         # print("The book has been borrowed successfully")
@@ -22,6 +24,7 @@ class Library:
                         book.is_available = False
                         print("Excellent, the book was borrowed")
 
+
     def return_book(self,user_id, book_isbn):
         for user in self.list_of_users:
             if user.user_id == user_id:
@@ -30,12 +33,14 @@ class Library:
                         user.borrowed_books.pop(book)
                         book.is_available = True
 
+
     def list_available_books(self):
         available_books = []
         for book in self.list_of_books:
             if book.is_available:
                 available_books.append(book.title)
         return available_books
+
 
     def search_book(self,author):
         authors_books = []
@@ -59,23 +64,3 @@ library1.add_user(user2)
 library1.borrow_book(207827924,book1.isbn)
 library1.borrow_book(207827924,book2.isbn)
 print(library1.list_available_books())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

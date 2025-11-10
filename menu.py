@@ -1,3 +1,4 @@
+from library.library import Library
 
 def menu():
     option = input('pick an option\n1. Add Book\n2. Add User\n3. Borrow Book\n4. return a book\n5.see all available books\n6. search a book\n7. Save & Exit')
@@ -19,15 +20,3 @@ def menu():
             break
         else:
             print('invalid choice, try again')
-
-
-if __name__ == '__main__':
-    menu()
-
-
-
-
-
-
-
-

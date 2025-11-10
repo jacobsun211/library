@@ -58,12 +58,12 @@ class Library:
         for book in books:
             print(f'title: {book['title']}; author: {book['author']}; isbn: {book['isbn']}')
 
-
-    def search_book(self,author):
+    @staticmethod
+    def search_book(author):
         authors_books = []
-        with open('books.json', 'w') as f:
-            json.dump([], f)
-        for book in self.list_of_books:
+        with open('books.json', 'r') as f:
+            books = json.load(f)
+        for book in books:
             if book.author == author:
                 authors_books.append(book.name)
         return authors_books

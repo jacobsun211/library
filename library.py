@@ -68,11 +68,11 @@ class Library:
                 authors_books.append(book.name)
         return authors_books
 
-
-book = Book('harry potter', "JK rowling")
-Library.add_book(book)
-user = User('jacob')
-Library.borrow_book(user.id,book.isbn)
-Library.list_available_books()
-
-
+#
+# book = Book('harry potter', "JK rowling")
+# Library.add_book(book)
+# user = User('jacob')
+# Library.borrow_book(user.id,book.isbn)
+# Library.list_available_books()
+#
+#

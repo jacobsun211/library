@@ -1,6 +1,6 @@
 import json
-from library.book import Book
-from library.user import User
+from book import Book
+from user import User
 
 class Library:
     with open('books.json','w')as f:

@@ -20,7 +20,7 @@ class Library:
     def add_user(user):
         with open('users.json', 'r')as f:
             users = json.load(f)
-        users.append(user)
+        users.append(User.to_dict(user))
         with open('users.json', 'w') as f:
             json.dump(users,f)
 
@@ -29,14 +29,17 @@ class Library:
         with open("users.json",'r')as f:
             users = json.load(f)
         for user in users:
-            if user.id == user_id:
+            if user['id'] == user_id:
                 with open('books.json','r') as f:
                     books = json.load(f)
-                for book in books:
-                    if book.isbn == book_isbn and book.is_available:
-                        user.borrowed_books.append(book)
-                        book.is_available = False
-                        print(f'{book} is borrowed')
+                for i,book in enumerate(books):
+                    if book['isbn'] == book_isbn and book['is_available']:
+                        user['borrowed_books'].append(book)
+                        book['is_available'] = False
+                        with open("books.json", 'w') as f:
+                            json.dump(books,f)
+                        print(f'{books[i]['title']} is borrowed')
+
 
     @staticmethod
     def return_book(user_id, book_isbn):
@@ -56,7 +59,8 @@ class Library:
         with open('books.json', 'r') as f:
             books = json.load(f)
         for book in books:
-            print(f'title: {book['title']}; author: {book['author']}; isbn: {book['isbn']}')
+            if book['is_available']:
+                print(f'title: {book['title']}; author: {book['author']}; isbn: {book['isbn']}')
 
     @staticmethod
     def search_book(author):
@@ -70,9 +74,17 @@ class Library:
 
 
 book = Book('harry potter', "JK rowling")
+book1 = Book('game of thrones', "JK rowling")
+book2 = Book('way of kings', "JK rowling")
+book3 = Book('hollow knight', "JK rowling")
 Library.add_book(book)
+Library.add_book(book1)
+Library.add_book(book2)
+Library.add_book(book3)
 user = User('jacob')
-Library.borrow_book(user.id,book.isbn)
+Library.add_user(user)
+Library.borrow_book(user.id,book2.isbn)
 Library.list_available_books()
+
 
 

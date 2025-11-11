@@ -23,11 +23,15 @@ def menu():
             Library.borrow_book(user,book)
             print('done')
         elif option == '4':
-            print('book returned')
+            user_id = input("enter user_id")
+            book_title= input("enter a book title")
+            book_isbn = book_title
+            Library.return_book(user_id,book_isbn)
         elif option == '5':
             Library.list_available_books()
         elif option == '6':
-            print('search book')
+            author = input("enter author ")
+            print(Library.search_book(author))
         elif option == '7':
             print('exiting...')
             break

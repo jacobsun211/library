@@ -1,14 +1,28 @@
-from library.library import Library
+from Library_Management_System.library import Library
+from Library_Management_System.library import Book
+from Library_Management_System.library import User
+
 
 def menu():
-    option = input('pick an option\n1. Add Book\n2. Add User\n3. Borrow Book\n4. return a book\n5.see all available books\n6. search a book\n7. Save & Exit')
+    option = 0
     while option != '7':
+        option = input(
+            'pick an option\n1. Add Book\n2. Add User\n3. Borrow Book\n4. return a book\n5.see all available books\n6. search a book\n7. Save & Exit\n\n  ')
         if option == '1':
-            print('book added!')
+            title = input('please enter the title of the book: ')
+            author = input('please enter the author of the book: ')
+            book = Book(title,author)
+            Library.add_book(book)
+            print(book.title)
         elif option == '2':
-            print('user added!')
+            name = input('what is your name? ')
+            user = User(name)
+            Library.add_user(user)
         elif option == '3':
-            print('book borrowed!')
+            user = input('what is your name? ')
+            book = input('what book do you want to take?')
+            Library.borrow_book(user,book)
+            print('done')
         elif option == '4':
             print('book returned')
         elif option == '5':
@@ -20,3 +34,7 @@ def menu():
             break
         else:
             print('invalid choice, try again')
+
+
+
+
